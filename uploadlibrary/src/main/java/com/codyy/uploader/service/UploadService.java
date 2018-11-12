@@ -22,7 +22,6 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.URL;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
 /**
  * upload Service
@@ -53,6 +52,7 @@ public class UploadService extends Service implements Handler.Callback {
     }
 
     public void post(String uploadUrl, Map<String, String> params, FormFile[] files) {
+        isCancel = false;
         mThreadPoolUtils.execute(new UploadThread(uploadUrl, params, files));
     }
 
@@ -75,6 +75,7 @@ public class UploadService extends Service implements Handler.Callback {
 
         @Override
         public void run() {
+            if (isCancel) return;
             final String BOUNDARY = "---------------------------7da2137580612"; //数据分隔线
             final String endLine = "--" + BOUNDARY + "--\r\n";//数据结束标志
             Socket socket = null;
@@ -192,7 +193,6 @@ public class UploadService extends Service implements Handler.Callback {
                     sendErrorMessage(e);
                 }
             } finally {
-                isCancel = false;
                 try {
                     for (FormFile formFile : files) {
                         if (formFile.getInputStream() != null) {
