@@ -15,10 +15,10 @@ allprojects {
 **Step 2. Add the dependency**
 ```
 dependencies {
-            compile('com.github.CodyyAndroid:Uploader:1.0.0')
+            implementation 'com.github.CodyyAndroid:Uploader:1.0.1'
 	}
 
 ```
-## [API](https://jitpack.io/com/github/CodyyAndroid/Uploader/1.0.0/javadoc/)
+## [API](https://jitpack.io/com/github/CodyyAndroid/Uploader/1.0.1/javadoc/)
 
 
